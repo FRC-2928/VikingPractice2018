@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2928.Command.Chassis.JoystickDrive;
 import org.usfirst.frc.team2928.MotionProfiling.Profile;
-import org.usfirst.frc.team2928.MotionProfiling.ProfileFollower;
+//import org.usfirst.frc.team2928.MotionProfiling.ProfileFollower;
 import org.usfirst.frc.team2928.Robot;
 import org.usfirst.frc.team2928.RobotConstants;
 import org.usfirst.frc.team2928.RobotMap;
@@ -27,10 +27,10 @@ Drivetrain extends Subsystem {
     private DifferentialDrive drive;
     private double angleSetpoint;
 
-    public ProfileFollower profileFollower;
+//    //public ProfileFollower profileFollower;
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new JoystickDrive());
+        //setDefaultCommand(new JoystickDrive());
     }
 
     public Drivetrain()
@@ -78,7 +78,7 @@ Drivetrain extends Subsystem {
         pigeon = new PigeonIMU(RobotMap.PIGEON);
         setBrakeMode(false);
 
-        profileFollower = new ProfileFollower(left, right);
+//        //profileFollower = new ProfileFollower(left, right);
         setMotorSafetyEnabled(true);
 
         zeroSensors();
@@ -145,9 +145,9 @@ Drivetrain extends Subsystem {
         left.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
     }
 
-    public boolean doneWithProfile()
+  //  public boolean doneWithProfile()
     {
-        return profileFollower.doneWithProfile();
+//        return profileFollower.doneWithProfile();
     }
 
     public void resetTalons()
@@ -158,17 +158,17 @@ Drivetrain extends Subsystem {
 
     public void startProfileDrive()
     {
-        profileFollower.startFollowing();
+//        profileFollower.startFollowing();
     }
 
     public void stopProfileDrive()
     {
-        profileFollower.stopFollowing();
+//        profileFollower.stopFollowing();
     }
 
     public void setProfiles(Profile[] profiles)
     {
-        profileFollower.setProfiles(profiles);
+//        profileFollower.setProfiles(profiles);
     }
 
     public void setMotorSafetyEnabled(boolean safety)

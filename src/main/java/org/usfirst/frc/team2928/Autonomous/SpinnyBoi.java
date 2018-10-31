@@ -7,7 +7,7 @@ import org.usfirst.frc.team2928.Subsystem.Chassis.Drivetrain;
 
 public class SpinnyBoi extends CommandGroup {
     public SpinnyBoi(){
-
+        
         Command rotateninety = new RotateNinety(90);
         addSequential(rotateninety);
     }

@@ -40,15 +40,15 @@ public class ProfileFollower {
         System.out.println("Init Follow Profile");
     }
 
-    public void processMotionProfileBufferPeriodic()
-    {
-        for (VikingSRX v : new VikingSRX[] {left, right})
-        {
-            v.sendNextPoint(); // It's ok if this fails, we won't lose any points
-            v.processMotionProfileBuffer(); // Move points from the top buffer to the bottom buffer
-        }
-        System.out.println("ProcessBuffer");
-    }
+//    public void processMotionProfileBufferPeriodic()
+//    {
+//        for (VikingSRX v : new VikingSRX[] {left, right})
+//        {
+//            v.sendNextPoint(); // It's ok if this fails, we won't lose any points
+//            v.processMotionProfileBuffer(); // Move points from the top buffer to the bottom buffer
+//        }
+//        System.out.println("ProcessBuffer");
+//    }
 
     public void followProfilePeriodic()
     {

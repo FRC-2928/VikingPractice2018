@@ -56,12 +56,13 @@ public class RotateNinety extends Command {
 
         double currentAngle = Robot.chassis.drivetrain.getYaw();
         double error = this.setpoint - currentAngle;
-        double kp = 1;
-        Robot.chassis.drivetrain.drive(1000 , kp*error);
+        double kp = -1.0/80;
+        Robot.chassis.drivetrain.drive(0 , kp*error);
         rotateToAngel(this.setpoint);
         this.counter++;
         System.out.println(this.counter);
         SmartDashboard.putNumber("countyboi",this.counter);
+        SmartDashboard.putNumber("Error", kp*error);
     }
 
     @Override

@@ -57,7 +57,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
         chassis.drivetrain.setMotorSafetyEnabled(false);
-       // new SpinnyBoi().start();
+        chassis.drivetrain.zeroGyro();
+        new SpinnyBoi().start();
 
 
 
@@ -66,7 +67,7 @@ public class Robot extends IterativeRobot {
 
 
     @Override
-    public void autonomousPeriodic() { //Scheduler.getInstance().run();
+    public void autonomousPeriodic() { Scheduler.getInstance().run();
     }
 
     @Override
