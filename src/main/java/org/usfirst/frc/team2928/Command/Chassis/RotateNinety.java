@@ -59,9 +59,6 @@ public class RotateNinety extends Command {
         double kp = -1.0/80;
         Robot.chassis.drivetrain.drive(0 , kp*error);
         rotateToAngel(this.setpoint);
-        this.counter++;
-        System.out.println(this.counter);
-        SmartDashboard.putNumber("countyboi",this.counter);
         SmartDashboard.putNumber("Error", kp*error);
     }
 
