@@ -25,6 +25,7 @@ public class RotateNinety extends Command {
         //this.setpoint = (int)(RobotConstants.DRIVE_TICKS_PER_FOOT * (degrees / 360 * Math.PI * RobotConstants.AXLE_LENGTH_FEET));
         this.setpoint = degrees;
         this.counter = 0;
+
     }
 
     @Override
@@ -56,7 +57,7 @@ public class RotateNinety extends Command {
 
         double currentAngle = Robot.chassis.drivetrain.getYaw();
         double error = this.setpoint - currentAngle;
-        double kp = -1.0/80;
+        double kp = -1.0/115;
         Robot.chassis.drivetrain.drive(0 , kp*error);
         rotateToAngel(this.setpoint);
         SmartDashboard.putNumber("Error", kp*error);
