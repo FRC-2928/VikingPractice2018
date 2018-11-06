@@ -11,8 +11,9 @@ import org.usfirst.frc.team2928.RobotMap;
 gyro stuff
 */
 
-public class RotateNinety extends Command {
+public class RotateToSetpoint extends Command {
 
+    private double errorSum;
     private double counter;
     private double setpoint; // For the right talon, left talon is -setpoint.
     private boolean motorSafetyBackup = true;
@@ -20,11 +21,12 @@ public class RotateNinety extends Command {
     private int decelCounter;
     private boolean hasStartedDecel;
     private PigeonIMU pigeon;
-    public RotateNinety(double degrees) {
+    public RotateToSetpoint(double degrees) {
         // requires(Robot.chassis.drivetrain);
         //this.setpoint = (int)(RobotConstants.DRIVE_TICKS_PER_FOOT * (degrees / 360 * Math.PI * RobotConstants.AXLE_LENGTH_FEET));
         this.setpoint = degrees;
         this.counter = 0;
+        this.errorSum = 0;
 
     }
 
@@ -57,10 +59,15 @@ public class RotateNinety extends Command {
 
         double currentAngle = Robot.chassis.drivetrain.getYaw();
         double error = this.setpoint - currentAngle;
-        double kp = -1.0/115;
-        Robot.chassis.drivetrain.drive(0 , kp*error);
-        rotateToAngel(this.setpoint);
-        SmartDashboard.putNumber("Error", kp*error);
+        double kp = -1.0/80;
+        this.errorSum += error;
+        double ki = -1.0/50000;
+        double pi = kp * error + ki * errorSum;
+        Robot.chassis.drivetrain.drive(0 , pi);
+        // rotateToAngel(this.setpoint);
+        SmartDashboard.putNumber("Error", pi);
+        SmartDashboard.putNumber("P",kp * error);
+        SmartDashboard.putNumber("I", ki * errorSum);
     }
 
     @Override

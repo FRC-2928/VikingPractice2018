@@ -24,14 +24,14 @@ public class Robot extends IterativeRobot {
     private Compressor compressor;
     public static Chassis chassis;
     public static OperatorInterface oi;
-    Command rotateninety;
+
 
     @Override
     public void robotInit() {
         compressor = new Compressor();
         chassis = new Chassis();
         compressor.start();
-        //rotateninety = new RotateNinety(90);
+        //rotateninety = new RotateToSetpoint(90);
         oi = new OperatorInterface();
     }
 
@@ -57,8 +57,6 @@ public class Robot extends IterativeRobot {
         chassis.drivetrain.setMotorSafetyEnabled(false);
         chassis.drivetrain.zeroGyro();
         new SpinnyBoi().start();
-
-
 
         }
 
