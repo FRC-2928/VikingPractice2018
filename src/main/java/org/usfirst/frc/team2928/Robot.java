@@ -55,7 +55,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
         chassis.drivetrain.setMotorSafetyEnabled(false);
-        chassis.drivetrain.zeroGyro();
+        Robot.chassis.drivetrain.zeroGyro();
+
+
         new SpinnyBoi().start();
 
         }

@@ -32,8 +32,15 @@ public class RotateToSetpoint extends Command {
 
     @Override
     protected boolean isFinished() {
-        return hasStartedDecel && Robot.chassis.drivetrain.getAverageVelocityMagnitude() < RobotConstants.TALON_CRUISE_VELOCITY * 0.02;
+
+        if (java.lang.Math.abs(getRotationError()) <= 1.0){
+
+            return true;
+
+        }
+        return false;
     }
+
 
     public void rotateToAngel(double targetBoi){
         double angle = Robot.chassis.drivetrain.getYaw();
@@ -57,17 +64,26 @@ public class RotateToSetpoint extends Command {
     @Override
     public void execute(){
 
-        double currentAngle = Robot.chassis.drivetrain.getYaw();
-        double error = this.setpoint - currentAngle;
+        double error = getRotationError();
         double kp = -1.0/80;
         this.errorSum += error;
-        double ki = -1.0/50000;
+        double ki = -1.0/20000;
         double pi = kp * error + ki * errorSum;
         Robot.chassis.drivetrain.drive(0 , pi);
         // rotateToAngel(this.setpoint);
         SmartDashboard.putNumber("Error", pi);
         SmartDashboard.putNumber("P",kp * error);
         SmartDashboard.putNumber("I", ki * errorSum);
+
+
+
+
+
+    }
+
+    public double getRotationError() {
+        double currentAngle = Robot.chassis.drivetrain.getYaw();
+        return this.setpoint - currentAngle;
     }
 
     @Override
