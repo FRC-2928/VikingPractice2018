@@ -21,6 +21,7 @@ public class RotateToSetpoint extends Command {
     private int decelCounter;
     private boolean hasStartedDecel;
     private PigeonIMU pigeon;
+    private double previousError = 0;
     public RotateToSetpoint(double degrees) {
         // requires(Robot.chassis.drivetrain);
         //this.setpoint = (int)(RobotConstants.DRIVE_TICKS_PER_FOOT * (degrees / 360 * Math.PI * RobotConstants.AXLE_LENGTH_FEET));
@@ -33,7 +34,7 @@ public class RotateToSetpoint extends Command {
     @Override
     protected boolean isFinished() {
 
-        if (java.lang.Math.abs(getRotationError()) <= 1.0){
+        if (java.lang.Math.abs(getRotationError()) <= 1.0/4){
 
             return true;
 
@@ -65,17 +66,23 @@ public class RotateToSetpoint extends Command {
     public void execute(){
 
         double error = getRotationError();
-        double kp = -1.0/80;
+        double kp = -1.0/105;
         this.errorSum += error;
-        double ki = -1.0/20000;
-        double pi = kp * error + ki * errorSum;
-        Robot.chassis.drivetrain.drive(0 , pi);
+        double derivative = (error - this.previousError)/0.02;
+        double ki = -1.0/6000;
+        double kd = -1.0/5500;
+        double pid = (kp * error) + (ki * errorSum) + (kd * derivative);
+        Robot.chassis.drivetrain.drive(0 , pid);
         // rotateToAngel(this.setpoint);
-        SmartDashboard.putNumber("Error", pi);
+        SmartDashboard.putNumber("Error", pid);
         SmartDashboard.putNumber("P",kp * error);
         SmartDashboard.putNumber("I", ki * errorSum);
+        SmartDashboard.putNumber("D", kd * derivative);
 
+        SmartDashboard.putNumber("CurrentError", this.previousError);
+        SmartDashboard.putNumber("PreviousError", error);
 
+        this.previousError = error;
 
 
 

@@ -30,7 +30,7 @@ Drivetrain extends Subsystem {
     //public ProfileFollower profileFollower;
     @Override
     protected void initDefaultCommand() {
-        // setDefaultCommand(new JoystickDrive());
+        setDefaultCommand(new JoystickDrive());
     }
 
     public Drivetrain()
