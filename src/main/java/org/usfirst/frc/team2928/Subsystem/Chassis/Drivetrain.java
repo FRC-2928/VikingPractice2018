@@ -20,8 +20,11 @@ Drivetrain extends Subsystem {
 
     public final VikingSRX left;
     private final VikingSRX leftFollower;
+    private final VikingSRX leftFollower2;
+
     public final VikingSRX right;
     private final VikingSRX rightFollower;
+    private final VikingSRX rightFollower2;
 
     private PigeonIMU pigeon;
     private DifferentialDrive drive;
@@ -36,13 +39,17 @@ Drivetrain extends Subsystem {
     public Drivetrain()
     {
         // Initialize talons
-        left = new VikingSRX(RobotMap.TALON_FRONT_LEFT);
-        leftFollower = new VikingSRX(RobotMap.TALON_BACK_LEFT);
-        leftFollower.set(ControlMode.Follower, RobotMap.TALON_FRONT_LEFT);
+        left = new VikingSRX(RobotMap.TALON_BACK_LEFT);
+        leftFollower = new VikingSRX(RobotMap.TALON_MIDDLE_LEFT);
+        leftFollower.set(ControlMode.Follower, RobotMap.TALON_BACK_LEFT);
+        leftFollower2 = new VikingSRX(RobotMap.TALON_FRONT_LEFT);
+        leftFollower2.set(ControlMode.Follower, RobotMap.TALON_BACK_LEFT);
 
-        right = new VikingSRX(RobotMap.TALON_FRONT_RIGHT);
-        rightFollower = new VikingSRX(RobotMap.TALON_BACK_RIGHT);
-        rightFollower.set(ControlMode.Follower, RobotMap.TALON_FRONT_RIGHT);
+        right = new VikingSRX(RobotMap.TALON_BACK_RIGHT);
+        rightFollower = new VikingSRX(RobotMap.TALON_MIDDLE_RIGHT);
+        rightFollower.set(ControlMode.Follower, RobotMap.TALON_BACK_RIGHT);
+        rightFollower2 = new VikingSRX(RobotMap.TALON_FRONT_RIGHT);
+        rightFollower2.set(ControlMode.Follower, RobotMap.TALON_BACK_RIGHT);
 
         // Invert the right side of the drivetrain, so both sides go the same way
         right.setInverted(true);

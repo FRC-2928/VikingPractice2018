@@ -42,7 +42,6 @@ public class Robot extends IterativeRobot {
         chassis.drivetrain.resetTalons();
         chassis.drivetrain.setMotorSafetyEnabled(true);
         chassis.drivetrain.stopProfileDrive();
-        rotateninety.start();
         new ResetSensors().start();
     }
 
