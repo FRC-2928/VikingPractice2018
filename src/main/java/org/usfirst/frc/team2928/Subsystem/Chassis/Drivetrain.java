@@ -61,7 +61,7 @@ Drivetrain extends Subsystem {
             // Our profiles have their own period set
             v.configMotionProfileTrajectoryPeriod(0, RobotConstants.CAN_TIMEOUT_MS);
             // Make it harder for Jett to tip it over, rapid acceleration is BAD with a tall robot.
-            v.configOpenloopRamp(0.3, RobotConstants.CAN_TIMEOUT_MS);
+            // v.configOpenloopRamp(0.3, RobotConstants.CAN_TIMEOUT_MS);
             // Set our motion magic velocity and acceleration
             v.configMotionCruiseVelocity(RobotConstants.TALON_CRUISE_VELOCITY, RobotConstants.CAN_TIMEOUT_MS);
             v.configMotionAcceleration(RobotConstants.TALON_MAX_ACCELERATION, RobotConstants.CAN_TIMEOUT_MS);
