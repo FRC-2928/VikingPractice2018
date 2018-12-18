@@ -65,6 +65,8 @@ public class RotateToSetpoint extends Command {
     @Override
     public void execute(){
 
+        // We're using the gyro to set a setpoint and then rotate to it.
+
         double error = getRotationError();
         double kp = -1.0/105;
         this.errorSum += error;
@@ -72,17 +74,19 @@ public class RotateToSetpoint extends Command {
         double ki = -1.0/6000;
         double kd = -1.0/5500;
         double pid = (kp * error) + (ki * errorSum) + (kd * derivative);
+        //Check out FRC Programming done right for a good explaination on PID
         Robot.chassis.drivetrain.drive(0 , pid);
         // rotateToAngel(this.setpoint);
         SmartDashboard.putNumber("Error", pid);
         SmartDashboard.putNumber("P",kp * error);
         SmartDashboard.putNumber("I", ki * errorSum);
         SmartDashboard.putNumber("D", kd * derivative);
-
+        // Displaying it all in smartdashboard
         SmartDashboard.putNumber("CurrentError", this.previousError);
         SmartDashboard.putNumber("PreviousError", error);
 
         this.previousError = error;
+        // Saving the previous error to use it in the derivative 
 
 
 

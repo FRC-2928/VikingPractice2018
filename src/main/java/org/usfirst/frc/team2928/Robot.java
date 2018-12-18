@@ -32,7 +32,6 @@ public class Robot extends IterativeRobot {
         compressor = new Compressor();
         chassis = new Chassis();
         compressor.start();
-        //rotateninety = new RotateToSetpoint(90);
         oi = new OperatorInterface();
     }
 
