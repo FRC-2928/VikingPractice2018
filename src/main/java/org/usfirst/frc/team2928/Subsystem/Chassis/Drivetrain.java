@@ -5,9 +5,11 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2928.Command.Chassis.JoystickDrive;
 import org.usfirst.frc.team2928.MotionProfiling.Profile;
 import org.usfirst.frc.team2928.MotionProfiling.ProfileFollower;
@@ -33,8 +35,11 @@ Drivetrain extends Subsystem {
     public ProfileFollower profileFollower;
     @Override
     protected void initDefaultCommand() {
+
         setDefaultCommand(new JoystickDrive());
+
     }
+
 
     public Drivetrain()
     {
@@ -83,7 +88,8 @@ Drivetrain extends Subsystem {
         drive.setSafetyEnabled(false);
 
         pigeon = new PigeonIMU(RobotMap.PIGEON);
-        setBrakeMode(false);
+        left.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+        right.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
         profileFollower = new ProfileFollower(left, right);
         setMotorSafetyEnabled(true);
@@ -93,11 +99,8 @@ Drivetrain extends Subsystem {
 
     public void drive(double move, double rotate) {
         this.drive(move, rotate, true);
-        StackTraceElement[] st = Thread.currentThread().getStackTrace();
-        for (StackTraceElement ste : st){
-            System.out.println(ste);
         }
-    }
+
 
     public void drive(double move, double rotate, boolean squaredInputs)
     {

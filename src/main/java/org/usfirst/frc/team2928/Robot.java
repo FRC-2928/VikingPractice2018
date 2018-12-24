@@ -31,8 +31,6 @@ public class Robot extends IterativeRobot {
         compressor = new Compressor();
         chassis = new Chassis();
         compressor.start();
-        SmartDashboard.putNumber("Erika's test @Jett",10);
-        rotateninety = new RotateNinety(90);
         oi = new OperatorInterface();
     }
 
@@ -56,7 +54,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
         chassis.drivetrain.setMotorSafetyEnabled(false);
-       // new SpinnyBoi().start();
+        new SpinnyBoi().start();
 
 
 
