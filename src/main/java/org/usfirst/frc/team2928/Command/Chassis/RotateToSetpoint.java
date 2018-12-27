@@ -11,20 +11,29 @@ import org.usfirst.frc.team2928.RobotMap;
 gyro stuff
 */
 
-public class RotateNinety extends Command {
+public class RotateToSetpoint extends Command {
 
-    private double counter;
     private double setpoint; // For the right talon, left talon is -setpoint.
+    private double kp;
+    private double ki;
+    private double kd;
+    private double errorSum;
+    private double previousError;
     private boolean motorSafetyBackup = true;
     private double previousVelocity;
     private int decelCounter;
     private boolean hasStartedDecel;
     private PigeonIMU pigeon;
-    public RotateNinety(double degrees) {
-        // requires(Robot.chassis.drivetrain);
+    public RotateToSetpoint(double degrees, double kp, double ki, double kd) {
+        requires(Robot.chassis.drivetrain);
         //this.setpoint = (int)(RobotConstants.DRIVE_TICKS_PER_FOOT * (degrees / 360 * Math.PI * RobotConstants.AXLE_LENGTH_FEET));
         this.setpoint = degrees;
-        this.counter = 0;
+        this.kp = 0;
+        this.ki = 0;
+        this.kd = 0;
+        this.errorSum = 0;
+        this.previousError = 0;
+
     }
 
     @Override
@@ -54,14 +63,16 @@ public class RotateNinety extends Command {
     @Override
     public void execute(){
 
+
         double currentAngle = Robot.chassis.drivetrain.getYaw();
         double error = this.setpoint - currentAngle;
-        double kp = 1;
-        Robot.chassis.drivetrain.drive(1000 , kp*error);
-        rotateToAngel(this.setpoint);
-        this.counter++;
-        System.out.println(this.counter);
-        SmartDashboard.putNumber("countyboi",this.counter);
+        this.errorSum += error;
+        double derivative = (error - this.previousError)/0.02;
+        double pid = (kp * error) + (ki * errorSum) + (kd * derivative);
+        Robot.chassis.drivetrain.drive(0 , pid);
+
+
+        this.previousError = error;
     }
 
     @Override
