@@ -24,6 +24,11 @@ public class RotateToSetpoint extends Command {
     private int decelCounter;
     private boolean hasStartedDecel;
     private PigeonIMU pigeon;
+
+    public double getRotationError() {
+        double currentAngle = Robot.chassis.drivetrain.getYaw();
+        return this.setpoint - currentAngle;
+    }
     public RotateToSetpoint(double degrees, double kp, double ki, double kd) {
         requires(Robot.chassis.drivetrain);
         //this.setpoint = (int)(RobotConstants.DRIVE_TICKS_PER_FOOT * (degrees / 360 * Math.PI * RobotConstants.AXLE_LENGTH_FEET));
@@ -38,7 +43,12 @@ public class RotateToSetpoint extends Command {
 
     @Override
     protected boolean isFinished() {
-        return hasStartedDecel && Robot.chassis.drivetrain.getAverageVelocityMagnitude() < RobotConstants.TALON_CRUISE_VELOCITY * 0.02;
+        if (java.lang.Math.abs(getRotationError()) <= 1.0/4){
+            
+            return true;
+
+        }
+        return false;
     }
 
     public void rotateToAngel(double targetBoi){
@@ -53,6 +63,7 @@ public class RotateToSetpoint extends Command {
         // Safety has to be disabled whenever we use a mode that isn't
         Robot.chassis.drivetrain.setMotorSafetyEnabled(false);
         Robot.chassis.drivetrain.zeroEncoders();
+        Robot.chassis.drivetrain.zeroGyro();
         previousVelocity = -1;
         decelCounter = 0;
         hasStartedDecel = false;
@@ -86,3 +97,4 @@ public class RotateToSetpoint extends Command {
         Robot.chassis.drivetrain.setMotorSafetyEnabled(motorSafetyBackup);
     }
 }
+
