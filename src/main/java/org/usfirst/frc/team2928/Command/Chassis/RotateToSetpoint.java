@@ -14,9 +14,9 @@ gyro stuff
 public class RotateToSetpoint extends Command {
 
     private double setpoint; // For the right talon, left talon is -setpoint.
-    private double kp;
-    private double ki;
-    private double kd;
+    private double P;
+    private double I;
+    private double D;
     private double errorSum;
     private double previousError;
     private boolean motorSafetyBackup = true;
@@ -33,9 +33,9 @@ public class RotateToSetpoint extends Command {
         requires(Robot.chassis.drivetrain);
         //this.setpoint = (int)(RobotConstants.DRIVE_TICKS_PER_FOOT * (degrees / 360 * Math.PI * RobotConstants.AXLE_LENGTH_FEET));
         this.setpoint = degrees;
-        this.kp = 0;
-        this.ki = 0;
-        this.kd = 0;
+        this.P = kp;
+        this.I = ki;
+        this.D = kd;
         this.errorSum = 0;
         this.previousError = 0;
 
@@ -44,7 +44,7 @@ public class RotateToSetpoint extends Command {
     @Override
     protected boolean isFinished() {
         if (java.lang.Math.abs(getRotationError()) <= 1.0/4){
-            
+
             return true;
 
         }
@@ -79,9 +79,12 @@ public class RotateToSetpoint extends Command {
         double error = this.setpoint - currentAngle;
         this.errorSum += error;
         double derivative = (error - this.previousError)/0.02;
-        double pid = (kp * error) + (ki * errorSum) + (kd * derivative);
-        Robot.chassis.drivetrain.drive(0 , pid);
+        double pid = (P * error) + (I * errorSum) + (D * derivative);
+        Robot.chassis.drivetrain.drive(1000 , pid);
 
+        SmartDashboard.putNumber("P",P);
+        SmartDashboard.putNumber("I",I);
+        SmartDashboard.putNumber("D",D);
 
         this.previousError = error;
     }

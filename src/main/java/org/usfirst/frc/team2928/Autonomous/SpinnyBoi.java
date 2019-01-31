@@ -9,6 +9,7 @@ public class SpinnyBoi extends CommandGroup {
 
         Command rotateninety = new RotateToSetpoint(90, -1/100, -1/6000, -1/5500);
         Command rotatebackninety = new RotateToSetpoint(-90,-1/100, -1/6000, -1/5500);
+
         addSequential(rotateninety);
         addSequential(rotatebackninety);
     }
